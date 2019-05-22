@@ -16,11 +16,17 @@ class Person(Game):
         number = self.create_number()
         while True:
             answer = raw_input('Enter a four digit number: ')
-            if not re.match(self.pattern,answer):
+            try:
+                if not re.match(self.pattern,answer):
+                    raise ValueError()
+            except ValueError:
                 print 'Only four digits numbers are accepted'
                 continue
             answer = map(int,answer)
-            if not self.check_number(str(self.list_to_number(answer))):
+            try:
+                if not self.check_number(str(self.list_to_number(answer))):
+                    raise Exception()
+            except Exception:
                 print 'Digits cannot be repeated'
                 continue
             eval = self.calculate(number,answer)

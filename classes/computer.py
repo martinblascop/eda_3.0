@@ -14,6 +14,12 @@ class Computer(Game):
         return Game.number_to_list(self,answer)
     def calculate(self,number,answer):
         return Game.calculate(self,number,answer)
+    def sum_digits_answer(self,number):
+        digit = int(number[0]) + int(number[3])
+        if digit > 4:
+            return False
+        else:
+            return True
     def next_four_digit_number(self,number,max_number):
         number += 1
         while not self.check_number(str(number)):
@@ -38,8 +44,18 @@ class Computer(Game):
         while True:
             print 'How about',self.list_to_number(number),'?'
             answer = raw_input('Your answer: ')
-            if not re.match(self.pattern,answer):
+            answer = answer.strip()
+            try:
+                if not re.match(self.pattern,answer):
+                    raise ValueError()
+            except ValueError:
                 print '\nBad answer. Try again!'
+                continue
+            try:
+                if not self.sum_digits_answer(answer):
+                    raise ValueError()
+            except ValueError:
+                print 'The number has four digits'
                 continue
             if answer == '4G 0R':
                 break
